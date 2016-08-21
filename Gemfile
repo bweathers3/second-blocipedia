@@ -31,3 +31,7 @@ source 'https://rubygems.org'
    gem 'faker'
    gem 'factory_girl_rails'
  end
+
+ gem 'devise'
+
+ 
