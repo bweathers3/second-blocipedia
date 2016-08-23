@@ -79,4 +79,16 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'second-blocipedia.herokuapp.com' }
 
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :user_name => '59dda42df98db9',
+      :password => '27931ba13ddee0',
+      :address => 'mailtrap.io',
+      :domain => 'mailtrap.io',
+      :port => '2525',
+      :authentication => :cram_md5
+      }
+    
+
 end
