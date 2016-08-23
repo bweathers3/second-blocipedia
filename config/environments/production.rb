@@ -77,7 +77,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'second-blocipedia.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'obscure-island-98529.herokuapp.com' }
 
 
     config.action_mailer.delivery_method = :smtp
@@ -89,6 +89,6 @@ Rails.application.configure do
       :port => '2525',
       :authentication => :cram_md5
       }
-    
+
 
 end
