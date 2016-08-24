@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  has_many :wikis
+  has_many :wikis, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

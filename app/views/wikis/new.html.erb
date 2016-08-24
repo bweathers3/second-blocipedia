@@ -1,0 +1,33 @@
+
+
+
+ <h1>Start A New Wiki</h1>
+
+ <div class="row">
+   <div class="col-md-4">
+     <p>Guidelines for Wikis</p>
+     <ul>
+       <li>Your Wiki may outline any ideas for hobbies, intentions or other plans.</li>
+       <li>Each Wiki will be reviewed by an editor.</li>
+       <li>Blocipedia retains the right to delete Wikis which could be offensive to others!</li>
+     </ul>
+   </div>
+   <div class="col-md-8">
+     <%= form_for @wiki do |f| %>
+       <div class="form-group">
+
+         <%= f.label :title %>
+         <%= f.text_field :title, class: 'form-control', placeholder: "Enter the new wiki title" %>
+       </div>
+
+       <div class="form-group">
+         <%= f.label :body %>
+         <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter the new wiki body" %>
+       </div>
+
+       <div class="form-group">
+         <%= f.submit "Save", class: 'btn btn-success' %>
+       </div>
+     <% end %>
+   </div>
+ </div>
