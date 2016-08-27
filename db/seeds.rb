@@ -1,9 +1,5 @@
-
-
 require 'random_data'
 
-
-# Create Users
  5.times do
    User.create!(
    name:      Faker::Name.name ,
@@ -13,10 +9,7 @@ require 'random_data'
    confirmed_at: Date.today
    )
  end
-
- users = User.all
-
-
+  users = User.all
 
 
  50.times do
@@ -24,13 +17,11 @@ require 'random_data'
       wiki = Wiki.create!(
       user:   users.sample,
       title:   Faker::Lorem.sentence ,
-      body:    Faker::Lorem.paragraph
+      body:    Faker::Lorem.paragraph,
+      private: Faker::Boolean.boolean(0.4)
    )
 
 end
-
-    wikis = Wiki.all
-
 
     puts "Seed finished"
     puts "#{User.count} users created"
