@@ -34,7 +34,8 @@ class ApplicationPolicy
   def destroy?
     user.present?
   end
-
+  
+=begin
   def scope
     Pundit.policy_scope!(user, record.class)
   end
@@ -51,4 +52,5 @@ class ApplicationPolicy
       scope
     end
   end
+=end
 end

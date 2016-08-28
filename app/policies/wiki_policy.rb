@@ -23,4 +23,38 @@ class WikiPolicy < ApplicationPolicy
     end
 
 
+
+    def show?
+      if record.private == true && (user.admin? || user.premium?)
+        true
+      elsif record.private == false
+        true
+      end
+    end
+
+    def create?
+      if record.private == true && (user.admin? || user.premium?)
+        true
+      elsif record.private == false
+        true
+      end
+    end
+
+    def update?
+      if record.private == true && (user.admin? || user.premium?)
+        true
+      elsif record.private == false
+        true
+      end
+    end
+
+    def destroy?
+      if record.private == true && (user.admin? || user.premium?)
+        true
+      elsif record.private == false
+        true
+      end
+    end
+
+
 end
