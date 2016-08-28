@@ -33,7 +33,7 @@ class WikiPolicy < ApplicationPolicy
     end
 
     def create?
-      if record.private == true && (user.admin? || user.premium?)
+      if  record.private == true && (user.admin? || user.premium?)
         true
       elsif record.private == false
         true

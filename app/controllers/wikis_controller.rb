@@ -12,7 +12,7 @@ class WikisController < ApplicationController
 
   def new
      @wiki = Wiki.new
-     authorize @wiki, :create?
+     #authorize @wiki, :create?
   end
 
   def edit
@@ -25,7 +25,7 @@ class WikisController < ApplicationController
        @wiki = Wiki.new
        @wiki.title = params[:wiki][:title]
        @wiki.body = params[:wiki][:body]
-       authorize @wiki, :create?
+       #authorize @wiki, :create?
 
        if @wiki.save
          flash[:notice] = "Your Wiki was saved successfully."
