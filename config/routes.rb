@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'user/edit'
+
+  get 'user/update'
+
   resources :wikis
 
   devise_for :users

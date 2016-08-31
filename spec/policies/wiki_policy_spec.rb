@@ -21,9 +21,10 @@ RSpec.describe WikiPolicy, type: :policy do
     end
 
     it "allows standard user to view wikis" do
-       assign_role!(user, :standard, my_wiki)
+       #assign_role!(user, :standard, my_wiki)
+       user.update_attributes(role: :standard)
        get :index
-       expect(subject).to permit(user, my_wiki)
+       expect(response).to permit(user, my_wiki)
     end
 
 
