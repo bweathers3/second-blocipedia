@@ -1,19 +1,23 @@
 class WikisController < ApplicationController
 
+
   def index
-    @wikis = Wiki.all
+    @wikis = policy_scope(Wiki.all)
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+    authorize @wiki, :show?
   end
 
   def new
      @wiki = Wiki.new
+     #authorize @wiki, :create?
   end
 
   def edit
     @wiki = Wiki.find(params[:id])
+    authorize @wiki, :update?
   end
 
   def create
@@ -21,11 +25,12 @@ class WikisController < ApplicationController
        @wiki = Wiki.new
        @wiki.title = params[:wiki][:title]
        @wiki.body = params[:wiki][:body]
-
+       @wiki.private = params[:wiki][:private]
+       #authorize @wiki, :create?
 
        if @wiki.save
          flash[:notice] = "Your Wiki was saved successfully."
-         redirect_to wikis_path #@wiki
+         redirect_to wikis_path
        else
          flash.now[:alert] = "There was an error saving the wiki. Please try again."
          render :new
@@ -33,9 +38,12 @@ class WikisController < ApplicationController
      end
 
      def update
+
         @wiki = Wiki.find(params[:id])
         @wiki.title = params[:wiki][:title]
         @wiki.body = params[:wiki][:body]
+        @wiki.private = params[:wiki][:private]
+        authorize @wiki, :update?
 
         if @wiki.save
           flash[:notice] = "Your Wiki was updated successfully."
@@ -49,6 +57,7 @@ class WikisController < ApplicationController
   def destroy
 
      @wiki = Wiki.find(params[:id])
+     authorize @wiki, :destroy?
 
      if @wiki.destroy
        flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."

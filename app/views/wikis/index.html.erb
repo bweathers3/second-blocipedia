@@ -11,8 +11,8 @@
        <div class="media">
          <div class="media-body">
            <h4 class="media-heading">
-
              <%= link_to wiki.title, wiki %>
+             <small> <% if wiki.private == true %>  Private Wiki <% else %>  Public Wiki <% end %> </small>
            </h4>
            <small>
              <%= wiki.body %>

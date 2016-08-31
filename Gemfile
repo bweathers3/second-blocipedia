@@ -20,7 +20,6 @@ source 'https://rubygems.org'
  gem 'turbolinks'
  gem 'bootstrap-sass'
  gem 'figaro'
- #gem 'pry'
 
  group :development, :test do
    gem 'byebug'
@@ -35,4 +34,5 @@ source 'https://rubygems.org'
  gem 'devise'
 
  gem 'web-console', group: :development
- 
+
+ gem "pundit"

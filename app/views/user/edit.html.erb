@@ -1,0 +1,23 @@
+
+<div class="row">
+   <div class="col-md-8">
+     <div class="media">
+       <br />
+       <div class="media-body">
+         <h2 class="media-heading"><%= current_user.name %></h2>
+         <h4 class="media-heading"><%= current_user.email %></h4>
+
+           <% if current_user.role == "standard" %>
+              <%= "You are currently enrolled as a Standard user." %>
+              <%= "As a Standard user all of your wikis are public." %>
+              <%= link_to "Would you like to upgrade?", user_update_path(@user), class: 'btn btn-success' %>
+            <% elsif current_user.premium? %>
+              <%= "You are currently enrolled as a permium user.         " %>
+              <%= link_to "Update my account?", user_update_path(@user), class: 'btn btn-success' %>
+
+             <% end %>
+         
+       </div>
+     </div>
+   </div>
+ </div>
