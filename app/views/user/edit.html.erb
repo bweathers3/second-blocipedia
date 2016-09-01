@@ -10,13 +10,17 @@
            <% if current_user.role == "standard" %>
               <%= "You are currently enrolled as a Standard user." %>
               <%= "As a Standard user all of your wikis are public." %>
-              <%= link_to "Would you like to upgrade?", user_update_path(@user), class: 'btn btn-success' %>
+              <%= link_to "Would you like to upgrade?", new_charge_path, class: 'btn btn-success' %>
+              <%= "A Premium Account is $15.00 / year." %>
+
             <% elsif current_user.premium? %>
-              <%= "You are currently enrolled as a permium user.         " %>
+              <%= "You are currently enrolled as a premium user.         " %>
               <%= link_to "Update my account?", user_update_path(@user), class: 'btn btn-success' %>
+              <%= "Downgrading to a Standard account will make all your Private Wikis become Public Wikis.         " %>
+              <%= "You will not be refunded from your Premium account.         " %>
 
              <% end %>
-         
+
        </div>
      </div>
    </div>
