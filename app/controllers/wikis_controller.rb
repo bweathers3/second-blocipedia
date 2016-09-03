@@ -22,37 +22,33 @@ class WikisController < ApplicationController
 
   def create
 
-       @wiki = Wiki.new
-       @wiki.title = params[:wiki][:title]
-       @wiki.body = params[:wiki][:body]
-       @wiki.private = params[:wiki][:private]
-       #authorize @wiki, :create?
+     @wiki = Wiki.new(wiki_params)
+     @wiki.user = current_user
+     #authorize @wiki, :create?
 
-       if @wiki.save
-         flash[:notice] = "Your Wiki was saved successfully."
-         redirect_to wikis_path
-       else
-         flash.now[:alert] = "There was an error saving the wiki. Please try again."
-         render :new
-       end
+     if @wiki.save
+       flash[:notice] = "Your Wiki was saved successfully."
+       redirect_to wikis_path
+     else
+       flash.now[:alert] = "There was an error saving the wiki. Please try again."
+       render :new
      end
+   end
 
-     def update
+   def update
 
-        @wiki = Wiki.find(params[:id])
-        @wiki.title = params[:wiki][:title]
-        @wiki.body = params[:wiki][:body]
-        @wiki.private = params[:wiki][:private]
-        authorize @wiki, :update?
+      @wiki = Wiki.find(params[:id])
+      @wiki.assign_attributes(wiki_params)
+      authorize @wiki, :update?
 
-        if @wiki.save
-          flash[:notice] = "Your Wiki was updated successfully."
-          redirect_to wikis_path #@wiki
-        else
-          flash.now[:alert] = "There was an error saving the wiki. Please try again."
-          render :edit
-        end
+      if @wiki.save
+        flash[:notice] = "Your Wiki was updated successfully."
+        redirect_to wikis_path
+      else
+        flash.now[:alert] = "There was an error saving the wiki. Please try again."
+        render :edit
       end
+    end
 
   def destroy
 
@@ -67,6 +63,12 @@ class WikisController < ApplicationController
        render :show
      end
    end
+
+private
+
+ def wiki_params
+   params.require(:wiki).permit(:title, :body, :private)
+ end
 
 
 end

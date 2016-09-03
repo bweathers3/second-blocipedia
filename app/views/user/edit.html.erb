@@ -8,15 +8,17 @@
          <h4 class="media-heading"><%= current_user.email %></h4>
 
            <% if current_user.role == "standard" %>
-              <%= "You are currently enrolled as a Standard user." %>
-              <%= "As a Standard user all of your wikis are public." %>
-              <%= link_to "Would you like to upgrade?", user_update_path(@user), class: 'btn btn-success' %>
-            <% elsif current_user.premium? %>
-              <%= "You are currently enrolled as a permium user.         " %>
-              <%= link_to "Update my account?", user_update_path(@user), class: 'btn btn-success' %>
+              <div><%= "You are currently enrolled as a Standard user." %></div>
+              <div><%= "As a Standard user all of your wikis are public." %></div>
+              <div><%= "A Premium Account is $15.00 / year." %></div>
+              <%= link_to "Would you like to upgrade?", new_charge_path, class: 'btn btn-success' %>
 
-             <% end %>
-         
+            <% elsif current_user.premium? %>
+              <div><%= "You are currently enrolled as a Premium user." %></div>
+              <div><%= "Downgrading to a Standard account will make all your Private Wikis become Public Wikis." %> </div>
+              <div><%= "You will not be refunded from your Premium account." %></div>
+              <%= button_to 'Downgrade Your Account?', user_update_path, class: 'btn btn-success' , method: :get %>
+           <% end %>
        </div>
      </div>
    </div>

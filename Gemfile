@@ -36,3 +36,7 @@ source 'https://rubygems.org'
  gem 'web-console', group: :development
 
  gem "pundit"
+
+ gem 'stripe'
+
+ 
