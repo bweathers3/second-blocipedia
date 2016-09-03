@@ -5,25 +5,26 @@ class UserController < ApplicationController
   end
 
   def update
-    current_user.role = 'standard'
-    #current_user.role = 'premium'
-    current_user.save
-
+    downgrade_plan
+    downgrade_wikis
+    redirect_to root_path
   end
 
-end
-=begin
-     @user = current_user
 
-     @user.assign_attributes(@user_params)
-     @user.role = 'premium'
+ private
 
-     if @user.save
-       flash[:notice] = "Your account was updated successfully."
-       redirect_to root_path
-     else
-       flash.now[:alert] = "Error saving your account changes. Please try again."
-       render :edit
-     end
+  def downgrade_plan
+    current_user.role = 'standard'
+    current_user.save
+  end
+
+  def downgrade_wikis
+    @wikis = Wiki.all
+    @wikis.each do |w|
+      if current_user.id  == w.user_id
+          w.private = false
+          w.save
+      end
    end
-=end
+ end
+end
