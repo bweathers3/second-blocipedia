@@ -7,6 +7,7 @@ class UserController < ApplicationController
   def update
     downgrade_plan
     downgrade_wikis
+    flash[:notice] = "Your subscription has been downgraded to Standard, #{current_user.email}! You may upgrade again at any time."
     redirect_to root_path
   end
 
