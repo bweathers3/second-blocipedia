@@ -12,7 +12,7 @@ class ApplicationPolicy
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    user.present?
   end
 
   def create?
@@ -34,5 +34,5 @@ class ApplicationPolicy
   def destroy?
     user.present?
   end
-  
+
 end
