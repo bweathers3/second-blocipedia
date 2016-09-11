@@ -4,11 +4,12 @@ Rails.application.routes.draw do
 
   get 'user/update'
 
+  #get "wikis/drop_collaborator" => "wikis#drop_collaborator", :as => :drop_collaborator
+
   resources :wikis
 
   resources :charges, only: [:new, :create]
 
-  #resources :user, only: [:edit, :update]
 
   devise_for :users
 
