@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe WikisController, type: :controller do
 
   let(:user) { User.create!(name: "Mike", email: "Blocipedia@bloc.com", password: "password", password_confirmation: "password", confirmed_at: Date.today) }
-
-  let(:my_wiki) { Wiki.create!(title: "New Wiki", body: 'Wiki Body', user: user) }
+  let(:user2) { User.create!(name: "Sam", email: "Blocipedia2@bloc.com", password: "password2", password_confirmation: "password2", confirmed_at: Date.today) }
+  let(:my_wiki) { Wiki.create!(title: "New Wiki", body: 'Wiki Body', user: user,collaborator_email: "test@gmail.com", collaborator_drop: "test2@gmail.com") }
 
 
   before :each do
@@ -156,6 +156,7 @@ describe "DELETE destroy" do
    end
 
 #################
+
 
 
 end

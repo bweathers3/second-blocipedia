@@ -45,17 +45,17 @@
 
        <h4>Current Collaborators</h4>
 
-       <%= @wiki.collaborating_users.each do |d| %>
+       <% @wiki.collaborating_users.each do |d| %>
           <li>
                 <%= d.name %>,
                 <%= d.email %>
           </li>
        <% end %>
-
+       <% if current_user.admin? || current_user.premium? %>
        <div class="form-group">
          <%= f.text_field :collaborator_drop, class: 'form-control', placeholder: "Enter the email address of your collaborator to drop from this project!" %>
        </div>
-
+       <% end %>
 
 
         <div class="form-group">
