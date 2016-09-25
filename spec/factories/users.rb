@@ -7,6 +7,6 @@ FactoryGirl.define do
     password_confirmation "password"
     confirmed_at Date.today
     name { Faker::Name.name }
-
+    role 0
   end
 end

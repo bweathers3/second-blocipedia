@@ -1,7 +1,7 @@
 class WikisController < ApplicationController
 
 
-  def index
+   def index
      @wikis = policy_scope(Wiki)
    end
 
@@ -12,7 +12,7 @@ class WikisController < ApplicationController
 
   def new
      @wiki = Wiki.new
-     #authorize @wiki, :create?
+     authorize @wiki, :create?
   end
 
   def edit
@@ -24,7 +24,7 @@ class WikisController < ApplicationController
 
      @wiki = Wiki.new(wiki_params)
      @wiki.user = current_user
-     #authorize @wiki, :create?
+     authorize @wiki, :create?
 
      if @wiki.save
        flash[:notice] = "Your Wiki was saved successfully."
@@ -40,6 +40,8 @@ class WikisController < ApplicationController
       @wiki = Wiki.find(params[:id])
       @wiki.assign_attributes(wiki_params)
       authorize @wiki, :update?
+      #@wiki = @tested_wiki
+
 
       if @wiki.collaborator_email.present?
         @wiki.collaborating_users << User.where(email: @wiki.collaborator_email).first
@@ -48,6 +50,8 @@ class WikisController < ApplicationController
       if @wiki.collaborator_drop.present?
         drop_collaborator
       end
+
+
 
       if @wiki.save
         flash[:notice] = "Your Wiki was updated successfully."

@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe WelcomeController, type: :controller do
 
-  #before :each do
-  #  sign_in user
-  #end
+  let(:user) { User.create!(name: "Mike", email: "Blocipedia@bloc.com", password: "password", password_confirmation: "password", role: 2, confirmed_at: Date.today) }
+
+  before :each do
+    sign_in user
+  end
 
   describe "GET #index" do
     it "returns http success" do

@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
 
   let(:user) { User.create!(name: "Mike", email: "Blocipedia@bloc.com", password: "password", password_confirmation: "password", confirmed_at: Date.today, role: 0) }
-  #let(:user) { create!(:user) }
 
   it { is_expected.to have_many(:wikis) }
+  it { is_expected.to have_many(:collaborators) }
 
      describe "attributes" do
        it "has name and email attributes" do
