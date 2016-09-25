@@ -5,7 +5,7 @@ class WikiPolicy < ApplicationPolicy
       Pundit.policy_scope!(user, record.class)
     end
 
-class Scope
+ class Scope
    attr_reader :user, :scope
 
    def initialize(user, scope)
@@ -40,4 +40,27 @@ class Scope
    end
  end
 
-end
+  def update
+    individual_scope
+  end
+
+  def create
+    individual_scope
+  end
+
+  def destroy
+    individual_scope
+  end
+
+
+
+  private
+
+  def individual_scope
+    return true if user.admin?
+    return true if @wiki.user_id == @user.id
+    return true if @wiki.collaborating_users.include?(@user)
+    return true if @wiki.private == false
+  end
+
+ end

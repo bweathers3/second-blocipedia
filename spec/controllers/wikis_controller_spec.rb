@@ -2,15 +2,17 @@ require 'rails_helper'
 
 RSpec.describe WikisController, type: :controller do
 
-  let(:user) { User.create!(name: "Mike", email: "Blocipedia@bloc.com", password: "password", password_confirmation: "password", confirmed_at: Date.today) }
-  let(:user2) { User.create!(name: "Sam", email: "Blocipedia2@bloc.com", password: "password2", password_confirmation: "password2", confirmed_at: Date.today) }
-  let(:my_wiki) { Wiki.create!(title: "New Wiki", body: 'Wiki Body', user: user,collaborator_email: "test@gmail.com", collaborator_drop: "test2@gmail.com") }
+  let(:user) { User.create!(name: "Admin", email: "Blocipedia@bloc.com", password: "password", password_confirmation: "password", role: 2, confirmed_at: Date.today) }
+  let(:user2) { User.create!(name: "Sam", email: "Blocipedia2@bloc.com", password: "password2", password_confirmation: "password2", role: 0, confirmed_at: Date.today) }
+  let(:user3) { User.create!(name: "Premium", email: "Blocipedia3@bloc.com", password: "password3", password_confirmation: "password3", role: 1, confirmed_at: Date.today) }
+  let(:my_wiki) { Wiki.create!(title: "New Wiki", body: 'Wiki Body', user: user, private: true, collaborator_email: "test@gmail.com", collaborator_drop: "test2@gmail.com") }
+  let(:my_wiki_public) { Wiki.create!(title: "New Wiki2", body: 'Wiki Body2', user: user2, private: false) }
+  let(:my_wiki_private) { Wiki.create!(title: "New Wiki3", body: 'Wiki Body3', user: user3, private: true) }
 
 
   before :each do
     sign_in user
   end
-
 
   describe "GET #index" do
     it "returns http success" do
@@ -24,8 +26,6 @@ RSpec.describe WikisController, type: :controller do
     end
 
   end
-
-  ##############################
 
 
   describe "GET new" do
@@ -56,19 +56,17 @@ RSpec.describe WikisController, type: :controller do
 
 
       it "assigns the new wiki to @wiki" do
-        post :create, wiki: {title: "New Wiki", body: 'Wiki Body', user: user}
+        post :create, wiki: {title: "New Wiki", body: 'Wiki Body', user: user, private: true, collaborator_email: "test@gmail.com", collaborator_drop: "test2@gmail.com"}
         expect(assigns(:wiki)).to eq Wiki.last
       end
 
 
-      it "redirects to the new wiki" do
-        post :create, wiki: {title: "New Wiki", body: 'Wiki Body', user: user}
-        expect(response).to redirect_to Wiki.last
+      it "redirects to the wiki index" do
+        post :create, wiki: {title: "New Wiki", body: 'Wiki Body', user: user, private: true, collaborator_email: "test@gmail.com", collaborator_drop: "test2@gmail.com"}
+        expect(response).to redirect_to wikis_path
       end
     end
 
-
-  ##############################
 
   describe "GET show" do
        it "returns http success" do
@@ -87,7 +85,6 @@ RSpec.describe WikisController, type: :controller do
        end
      end
 
-  ##############################
 
 describe "GET edit" do
     it "returns http success" do
@@ -112,7 +109,6 @@ describe "GET edit" do
 
   end
 
-#################
 
 describe "PUT update" do
 
@@ -130,16 +126,15 @@ describe "PUT update" do
 
      end
 
-     it "redirects to the updated wiki" do
+     it "redirects to the wiki index" do
        new_title = "Second Wiki"
        new_body = "Second Wiki text for body"
 
        put :update, id: my_wiki.id, wiki: {title: new_title, body: new_body}
-       expect(response).to redirect_to my_wiki
+       expect(response).to redirect_to wikis_path
      end
    end
 
-#################
 
 describe "DELETE destroy" do
 
@@ -155,8 +150,66 @@ describe "DELETE destroy" do
      end
    end
 
-#################
+####
+
+context "standard user" do
+
+  before :each do
+    sign_in user2
 
 
+  describe "GET show" do
+       it "returns http success" do
+         get :show, {id: my_wiki_public.id}
+         expect(response).to have_http_status(:success)
+       end
+
+       it "renders the #show view" do
+         get :show, {id: my_wiki_public.id}
+         expect(response).to render_template :show
+       end
+
+       it "renders the #edit view for public wiki" do
+         get :edit, {id: my_wiki_public.id}
+         expect(response).to render_template :edit
+       end
+
+       it "renders the #edit view for private wiki" do
+         get :edit, {id: my_wiki_private.id}
+         expect(assigns(:user_id)).to eq(user2)
+       end
+     end
+  end
+end
+
+
+  context "Premium user" do
+
+    before :each do
+      sign_in user3
+
+    describe "GET show" do
+         it "returns http success" do
+           get :show, {id: my_wiki_public.id}
+           expect(response).to have_http_status(:success)
+         end
+
+         it "renders the #show view" do
+           get :show, {id: my_wiki_public.id}
+           expect(response).to render_template :show
+         end
+
+         it "renders the #edit view for public wiki" do
+           get :edit, {id: my_wiki_public.id}
+           expect(response).to render_template :edit
+         end
+
+         it "renders the #edit view for private wiki" do
+           get :edit, {id: my_wiki_private.id}
+           expect(response).to render_template :edit
+         end
+       end
+    end
+  end
 
 end
